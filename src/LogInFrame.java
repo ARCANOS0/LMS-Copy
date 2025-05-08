@@ -4,18 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class LogInFrame implements ActionListener{
+public class LogInFrame extends UsersStorage implements ActionListener{
 
     private JFrame logInFrame;
     private JTextField username;
     private JPasswordField password;
     private JLabel messageLabel;
     private JButton logInButton;
-    protected HashMap<String, String> loginSessionInfo;
 
-    public LogInFrame(HashMap<String, String> loginSessionInfo) {
-        this.loginSessionInfo = loginSessionInfo;
-
+    public LogInFrame() {
+        super();
+        System.out.println("LogInFrame is created");
         // Frame setup
         logInFrame = new JFrame("Login");
         logInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,22 +103,38 @@ public class LogInFrame implements ActionListener{
         logInFrame.setVisible(true);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == logInButton) {
             String name = username.getText();
             String passwordField = String.valueOf(password.getPassword());
 
-            if (loginSessionInfo.containsKey(name)) {
-                if (loginSessionInfo.get(name).equals(passwordField)) {
-                    messageLabel.setText("Login Successful ✅");
-                    logInFrame.dispose();
-                    new MainFrame().initUI();
-                    // launch main frame
+            // Check if the entered username exists
+            if (usersInfo.containsKey(name)) {
+                // Check if the entered password matches the stored password for that user
+                if (usersInfo.get(name).equals(passwordField)) {
+                    // Password matches - Login is successful
+
+                    messageLabel.setText("Login Successful ✅"); // Set success message
+
+                    logInFrame.dispose(); // Close the login frame
+
+                    // *** NOW, determine which screen to open based on the username ***
+                    if (name.equals("admin")) {
+                        // If the logged-in user is 'admin', open the Dashboard
+                        new Dashboard();
+                    } else {
+                        // For any other valid user, open the MainFrame
+                        new MainFrame().initUI();
+                    }
+
                 } else {
+                    // Username exists, but password is incorrect
                     messageLabel.setText("Incorrect Password ❌");
                 }
             } else {
+                // Username does not exist in the storage
                 messageLabel.setText("User Not Found ❌");
             }
         }
@@ -134,10 +149,8 @@ public class LogInFrame implements ActionListener{
         }
     }
 
-    // Main for testing
     public static void main(String[] args) {
-        HashMap<String, String> testLogins = new HashMap<>();
-        testLogins.put("admin", "admin123");
-        SwingUtilities.invokeLater(() -> new LogInFrame(testLogins));
+
+
     }
 }

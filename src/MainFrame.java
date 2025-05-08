@@ -3,15 +3,24 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.net.URI;
-import java.util.HashMap;
+import java.util.ArrayList; // Import ArrayList
+import java.util.List;      // Import List
 
 public class MainFrame {
 
-    protected HashMap<String, String> loginSessionInfo;
+    // Use a static list to hold all lecture data, accessible globally
+    // Initialize it with the default lectures
+    public static ArrayList<String[]> allLectures = new ArrayList<>(List.of(
+            new String[]{"Java", "Intro to SDLC - Lecture 11", "https://batechu.com/storage/materials/1746561140681a6874a7896.pdf"},
+            new String[]{"Data Structure", "Tree - Lecture 8", "https://batechu.com/storage/materials/174635688968174a995da6b.pdf"},
+            new String[]{"CCNA", "Transport Layer - Lecture 9", "https://batechu.com/storage/materials/17462631296815dc597d302.pdf"},
+            new String[]{"Operating Systems", "Concurrency and Deadlocks - Lecture 7 Notes and Examples", "https://example.com/os-lecture-7.pdf"}
+    ));
+
     private JFrame mainFrame;
     private JPanel sidePanel;
     private JPanel topPanel;
-    private JPanel mainPanel;
+    private JPanel mainPanel; // Panel where cards will be added
 
     public JButton home = new JButton("Home") {
         @Override
@@ -51,7 +60,7 @@ public class MainFrame {
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setForeground(Color.WHITE);
+                button.setForeground(Color.WHITE); // Example hover effect
                 button.setBackground(hover);
             }
 
@@ -62,6 +71,7 @@ public class MainFrame {
         });
     }
 
+    // Overloaded buttonStyle for main content buttons
     public static void buttonStyle(JButton button, Color txt, Color bg, Color hover) {
         button.setFont(new Font("JetBrainsMono NFM Medium", Font.BOLD, 17));
         button.setBorderPainted(false);
@@ -82,6 +92,7 @@ public class MainFrame {
             }
         });
     }
+
 
     public static void setGlobalFont(Component component, Font font) {
         component.setFont(font);
@@ -109,16 +120,19 @@ public class MainFrame {
         JLabel courseLabel = new JLabel(courseTitle);
         JLabel lectureLabel = new JLabel(lectureTitle);
 
+        // Add tooltips for full text on hover
         courseLabel.setToolTipText(courseTitle);
         lectureLabel.setToolTipText(lectureTitle);
 
+
         JButton openBtn = new JButton("Open Lecture");
         openBtn.setForeground(Color.BLACK);
-        openBtn.setBackground(new Color(0xF5ECD5));
+        openBtn.setBackground(new Color(0xF5ECD5)); // Assuming this is a preferred button background
         openBtn.setFocusPainted(false);
         openBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         openBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        // Add ActionListener to the button
         openBtn.addActionListener(e -> {
             try {
                 if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -127,47 +141,77 @@ public class MainFrame {
                     JOptionPane.showMessageDialog(null, "Cannot open link. Desktop browsing not supported.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); // Log the exception
                 JOptionPane.showMessageDialog(null, "Error opening link: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
+
         card.add(courseLabel);
-        card.add(Box.createVerticalStrut(5));
+        card.add(Box.createVerticalStrut(5)); // Spacing
         card.add(lectureLabel);
-        card.add(Box.createVerticalStrut(10));
+        card.add(Box.createVerticalStrut(10)); // Spacing
         card.add(openBtn);
+
 
         return card;
     }
 
+    // Method to initialize and display the MainFrame GUI
     public void initUI() {
         mainFrame = new JFrame("LMS");
         mainFrame.setSize(1200, 800);
-        mainFrame.setIconImage(new ImageIcon("Images/icon.png").getImage());
+        // Assuming icon.png exists, otherwise remove/comment out
+        // mainFrame.setIconImage(new ImageIcon("Images/icon.png").getImage());
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.getContentPane().setLayout(new BorderLayout());
-        mainFrame.getContentPane().setBackground(Color.WHITE);
+        mainFrame.getContentPane().setBackground(Color.WHITE); // Set background for content pane
 
+        // --- Side Panel ---
         sidePanel = new JPanel();
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
-        sidePanel.setBackground(new Color(0xF5ECD5));
-        sidePanel.setPreferredSize(new Dimension(200, 800));
+        sidePanel.setBackground(new Color(0xF5ECD5)); // Use a color constant or define one
+        sidePanel.setPreferredSize(new Dimension(200, 800)); // Fixed width
 
+        Color textColor = new Color(0x000000); // Text color
+        Color activeColor = new Color(0xEAEAEA); // Color when button is active/selected
+        Color inactiveColor = new Color(0xF5ECD5); // Color when button is inactive
+        Color hoverColor = new Color(0x6D5D6E); // Hover color
+
+        buttonStyle(home, textColor, activeColor, inactiveColor, hoverColor);
+        buttonStyle(courses, textColor, activeColor, inactiveColor, hoverColor);
+        buttonStyle(lectures, textColor, activeColor, inactiveColor, hoverColor);
+        buttonStyle(logout, textColor, activeColor, inactiveColor, hoverColor);
+
+
+        sidePanel.add(Box.createVerticalGlue()); // Push buttons to the center vertically
+        sidePanel.add(home);
+        sidePanel.add(Box.createVerticalStrut(40)); // Spacing between buttons
+        sidePanel.add(courses);
+        sidePanel.add(Box.createVerticalStrut(40));
+        sidePanel.add(lectures);
+        sidePanel.add(Box.createVerticalStrut(40));
+        sidePanel.add(logout);
+        sidePanel.add(Box.createVerticalGlue()); // Push buttons to the center vertically
+
+        // --- Top Panel ---
         topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        topPanel.setBackground(new Color(0xF5ECD5));
-        topPanel.setPreferredSize(new Dimension(1200, 50));
+        topPanel.setBackground(new Color(0xF5ECD5)); // Match side panel color or use a different one
+        topPanel.setPreferredSize(new Dimension(1200, 50)); // Fixed height
 
         JLabel logo = new JLabel("LMS");
-        logo.setForeground(Color.BLACK);
-        logo.setFont(new Font("Monospaced", Font.BOLD, 25));
+        logo.setForeground(Color.BLACK); // Logo color
+        logo.setFont(new Font("Monospaced", Font.BOLD, 25)); // Logo font
 
         JTextField searchField = new JTextField("Find courses, trainers, etc.");
-        searchField.setMaximumSize(new Dimension(300, 30));
-        searchField.setForeground(Color.GRAY);
-        searchField.setPreferredSize(new Dimension(300, 30));
+        searchField.setMaximumSize(new Dimension(300, 30)); // Set preferred size for the search field
+        searchField.setForeground(Color.GRAY); // Placeholder text color
+        searchField.setPreferredSize(new Dimension(300, 30)); // Explicitly set preferred size
+
+
+        // Add FocusListener for placeholder text behavior
         searchField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 if (searchField.getText().equals("Find courses, trainers, etc.")) {
@@ -184,101 +228,92 @@ public class MainFrame {
             }
         });
 
-        topPanel.add(Box.createHorizontalStrut(20));
+        topPanel.add(Box.createHorizontalStrut(20)); // Left padding
         topPanel.add(logo);
-        topPanel.add(Box.createHorizontalGlue());
+        topPanel.add(Box.createHorizontalGlue()); // Push elements to the sides
         topPanel.add(searchField);
-        topPanel.add(Box.createHorizontalStrut(20));
+        topPanel.add(Box.createHorizontalStrut(20)); // Right padding
 
-        Color textColor = new Color(0x000000);
-        Color activeColor = new Color(0xEAEAEA);
-        Color inactiveColor = new Color(0xF5ECD5);
-        Color hoverColor = new Color(0x6D5D6E);
 
-        buttonStyle(home, textColor, activeColor, inactiveColor, hoverColor);
-        buttonStyle(courses, textColor, activeColor, inactiveColor, hoverColor);
-        buttonStyle(lectures, textColor, activeColor, inactiveColor, hoverColor);
-        buttonStyle(logout, textColor, activeColor, inactiveColor, hoverColor);
-
-        sidePanel.add(Box.createVerticalGlue());
-        sidePanel.add(home);
-        sidePanel.add(Box.createVerticalStrut(40));
-        sidePanel.add(courses);
-        sidePanel.add(Box.createVerticalStrut(40));
-        sidePanel.add(lectures);
-        sidePanel.add(Box.createVerticalStrut(40));
-        sidePanel.add(logout);
-        sidePanel.add(Box.createVerticalGlue());
-
+        // --- Navigation Handlers ---
         home.addActionListener(e -> {
-            mainFrame.dispose();
-            new MainFrame().initUI();
+            // If clicking home from MainFrame, just keep it open (or refresh)
+            // If you intend to close and open a new one, your current code does that
+            // mainFrame.dispose();
+            // new MainFrame().initUI();
+            // A simple way to "refresh" might be to clear and re-add cards
+            // But given your dispose() pattern, creating new is fine.
         });
 
         lectures.addActionListener(e -> {
             mainFrame.dispose();
-            new LecturesFrame();
+            new LecturesFrame(); // Assuming LecturesFrame exists
         });
 
         logout.addActionListener(e -> {
             mainFrame.dispose();
-            new LogInFrame(loginSessionInfo);
+            new LogInFrame(); // Assuming LogInFrame exists
         });
 
-        // 👇 Your moved scrollable panel section
+        // --- Main Content Panel (for Lecture Cards) ---
         mainPanel = new JPanel();
+        // Use a vertical box layout for cards
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(new Color(0xF0F0F0));
+        mainPanel.setBackground(new Color(0xF0F0F0)); // Light gray background for the content area
 
+        // Wrap the mainPanel in a JScrollPane to make it scrollable
         JScrollPane scrollPane = new JScrollPane(mainPanel);
-        scrollPane.setBorder(null);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.setBorder(null); // Remove the scroll pane border
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Make scrolling faster
 
-        String[][] lecturesData = {
-                {"Java", "Intro to SDLC - Lecture 11", "https://batechu.com/storage/materials/1746561140681a6874a7896.pdf"},
-                {"Data Structure", "Tree - Lecture 8", "https://batechu.com/storage/materials/174635688968174a995da6b.pdf"},
-                {"CCNA", "Transport Layer - Lecture 9", "https://batechu.com/storage/materials/17462631296815dc597d302.pdf"},
-                {"Operating Systems", "Concurrency and Deadlocks - Lecture 7 Notes and Examples", "https://example.com/os-lecture-7.pdf"}
-        };
-
-        mainPanel.add(Box.createVerticalStrut(20));
+        // --- Add Lecture Cards ---
+        mainPanel.add(Box.createVerticalStrut(20)); // Space at the top
 
         JLabel recentLabel = new JLabel("Recent Lectures");
-        recentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        recentLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the label
         mainPanel.add(recentLabel);
-        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(Box.createVerticalStrut(20)); // Space after the label
 
-        for (String[] lec : lecturesData) {
-            JPanel wrapper = new JPanel();
+        // 👇 Loop through the *static* list to create cards
+        for (String[] lec : allLectures) { // <-- Use the static list
+            JPanel wrapper = new JPanel(); // Use a wrapper panel to center the card
             wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
-            wrapper.setOpaque(false);
+            wrapper.setOpaque(false); // Make wrapper transparent
 
-            JPanel card = setLectureCard(lec[0], lec[1], lec[2]);
+            JPanel card = setLectureCard(lec[0], lec[1], lec[2]); // Create the card
 
-            wrapper.add(Box.createHorizontalGlue());
+            wrapper.add(Box.createHorizontalGlue()); // Push card to center horizontally
             wrapper.add(card);
-            wrapper.add(Box.createHorizontalGlue());
+            wrapper.add(Box.createHorizontalGlue()); // Push card to center horizontally
 
-            mainPanel.add(wrapper);
-            mainPanel.add(Box.createVerticalStrut(20));
+            mainPanel.add(wrapper); // Add the centered card (via its wrapper)
+            mainPanel.add(Box.createVerticalStrut(20)); // Space after the card
         }
 
-        mainPanel.add(Box.createVerticalGlue());
+        mainPanel.add(Box.createVerticalGlue()); // Push everything above up
 
+        // --- Add Panels to Frame ---
         mainFrame.add(sidePanel, BorderLayout.WEST);
         mainFrame.add(topPanel, BorderLayout.NORTH);
-        mainFrame.add(scrollPane, BorderLayout.CENTER);
+        mainFrame.add(scrollPane, BorderLayout.CENTER); // Add the scrollable content pane to the center
 
-        Font globalFont = new Font("JetBrainsMono NFM Medium", Font.PLAIN, 16);
-        setGlobalFont(mainFrame, globalFont);
+        // --- Set Global Font ---
+        // Define your preferred global font
+        Font globalFont = new Font("JetBrainsMono NFM Medium", Font.PLAIN, 16); // Example font
+        setGlobalFont(mainFrame, globalFont); // Apply the font to all components
 
-        logo.setFont(new Font("Monospaced", Font.BOLD, 25));
-        recentLabel.setFont(globalFont.deriveFont(Font.BOLD, 32));
+        // Override font for specific elements if needed
+        logo.setFont(new Font("Monospaced", Font.BOLD, 25)); // Make logo font bigger/bolder
+        recentLabel.setFont(globalFont.deriveFont(Font.BOLD, 32)); // Make recent label font bigger/bolder
 
+        // --- Make Frame Visible ---
         mainFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        new MainFrame().initUI();
+        // Run the GUI creation on the Event Dispatch Thread (EDT)
+        SwingUtilities.invokeLater(() -> {
+            new MainFrame().initUI();
+        });
     }
 }

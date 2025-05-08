@@ -1,13 +1,16 @@
 import java.util.HashMap;
 
 public class UsersStorage {
-    HashMap<String, String> usersInfo = new HashMap<String, String>();
+    protected HashMap<String, String> usersInfo = new HashMap<>();
 
-    UsersStorage(){
-        usersInfo.put("admin", "admin"); // puts a key-value pair into the hashMap
+    public UsersStorage() {
+        usersInfo.put("admin", "admin");
+        usersInfo.put("tariq", "2018");
+        usersInfo.put("sara", "2024");
+        usersInfo.put("hamada", "2025");
     }
 
-   protected HashMap getUsersInfo(){
+    public HashMap<String, String> getUsersInfo() {
         return usersInfo;
     }
 }
