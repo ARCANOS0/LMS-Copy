@@ -127,10 +127,16 @@ public class CoursesFrame extends MainFrame{
         // Optional: Apply specific button style
         // buttonStyle(viewBtn, Color.BLACK, new Color(0xF5ECD5), new Color(0xEAEAEA)); // If using the overloaded style
 
-        // Add ActionListener (placeholder)
+        // Add ActionListener to open details frame
         viewBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(card, "Opening details for: " + courseTitle, "View Course", JOptionPane.INFORMATION_MESSAGE);
-            // Implement actual navigation/details view here
+            // Pass course data and the STATIC list of all lectures
+            CourseDetailsFrame detailsFrame = new CourseDetailsFrame(
+                    courseTitle,
+                    description,
+                    imagePath,
+                    LecturesFrame.allLectures // Pass the static list from LecturesFrame
+            );
+            detailsFrame.setVisible(true); // Show the details window
         });
 
 

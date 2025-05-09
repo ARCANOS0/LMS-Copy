@@ -13,19 +13,21 @@ import java.awt.BasicStroke;
 import java.awt.RenderingHints;
 
 public class LecturesFrame {
+// In LecturesFrame.java
 
     public static ArrayList<String[]> allLectures = new ArrayList<>(List.of(
-            new String[]{"Java", "Intro to SDLC - Lecture 11", "https://batechu.com/storage/materials/1746561140681a6874a7896.pdf"},
-            new String[]{"Data Structure", "Tree - Lecture 8", "https://batechu.com/storage/materials/174635688968174a995da6b.pdf"},
-            new String[]{"CCNA", "Transport Layer - Lecture 9", "https://batechu.com/storage/materials/17462631296815dc597d302.pdf"},
-            new String[]{"Operating Systems", "Concurrency and DeadLocks - Lecture 7 Notes and Examples", "https://example.com/os-lecture-7.pdf"},
-            new String[]{"Data Structure", "Queue - Lecture 7", "https://batechu.com/storage/materials/174517442668053f9aa229b.pdf"},
-            new String[]{"Data Structure", "Sheet 7 - Solutions", "https://batechu.com/storage/materials/1745734466680dcb429e8c4.pdf"},
-            new String[]{"Data Structure", "Assignment 1", "https://batechu.com/storage/materials/17462652636815e4af7cda9.pdf"},
-            new String[]{"CCNA", "Sheet 9 - Solutions", "https://batechu.com/storage/materials/17463314666816e74aae4bd.pdf"},
-            new String[]{"Database Programming 2", "Database Normalization - Lecture 9", "https://batechu.com/storage/materials/17460029406811e3fcecd42.pdf"},
-            new String[]{"Java", "Java GUI - Lecture 10", "https://batechu.com/storage/materials/1745760794680e321a6f2d9.pdf"},
-            new String[]{"Java", "Java Exceptions - Lecture 9", "https://batechu.com/storage/materials/1745760440680e30b86bc11.pdf"}
+            // Update these course names to match CoursesFrame.allCourses
+            new String[]{"Java Programming", "Intro to SDLC - Lecture 11", "https://batechu.com/storage/materials/1746561140681a6874a7896.pdf"}, // Was "Java"
+            new String[]{"Data Structures & Algorithms", "Tree - Lecture 8", "https://batechu.com/storage/materials/174635688968174a995da6b.pdf"}, // Was "Data Structure"
+            new String[]{"Computer Networks (CCNA)", "Transport Layer - Lecture 9", "https://batechu.com/storage/materials/17462631296815dc597d302.pdf"}, // Was "CCNA"
+            new String[]{"Operating Systems", "Concurrency and Deadlocks - Lecture 7 Notes and Examples", "https://example.com/os-lecture-7.pdf"}, // Was "Operating Systems"
+            new String[]{"Data Structures & Algorithms", "Queue - Lecture 7", "https://batechu.com/storage/materials/174517442668053f9aa229b.pdf"}, // Was "Data Structure"
+            new String[]{"Data Structures & Algorithms", "Sheet 7 - Solutions", "https://batechu.com/storage/materials/1745734466680dcb429e8c4.pdf"}, // Was "Data Structure"
+            new String[]{"Data Structures & Algorithms", "Assignment 1", "https://batechu.com/storage/materials/17462652636815e4af7cda9.pdf"}, // Was "Data Structure"
+            new String[]{"Computer Networks (CCNA)", "Sheet 9 - Solutions", "https://batechu.com/storage/materials/1746331466816e74aae4bd.pdf"}, // Was "CCNA"
+            new String[]{"Database Programming", "Database Normalization - Lecture 9", "https://batechu.com/storage/materials/17460029406811e3fcecd42.pdf"}, // Was "Database Programming 2" - simplified to match "Database Programming"
+            new String[]{"Java Programming", "Java GUI - Lecture 10", "https://batechu.com/storage/materials/1745760794680e321a6f2d9.pdf"}, // Was "Java"
+            new String[]{"Java Programming", "Java Exceptions - Lecture 9", "https://batechu.com/storage/materials/1745760440680e30b86bc11.pdf"}  // Was "Java"
     ));
 
     private JFrame lectureFrame;
