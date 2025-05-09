@@ -239,10 +239,9 @@ public class MainFrame {
         home.addActionListener(e -> {
             // If clicking home from MainFrame, just keep it open (or refresh)
             // If you intend to close and open a new one, your current code does that
-            // mainFrame.dispose();
-            // new MainFrame().initUI();
-            // A simple way to "refresh" might be to clear and re-add cards
-            // But given your dispose() pattern, creating new is fine.
+             mainFrame.dispose();
+             new MainFrame().initUI();
+
         });
 
         lectures.addActionListener(e -> {
@@ -250,6 +249,10 @@ public class MainFrame {
             new LecturesFrame(); // Assuming LecturesFrame exists
         });
 
+        courses.addActionListener(e ->{
+            mainFrame.dispose();
+            new CoursesFrame();
+        });
         logout.addActionListener(e -> {
             mainFrame.dispose();
             new LogInFrame(); // Assuming LogInFrame exists
