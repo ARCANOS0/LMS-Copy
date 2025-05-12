@@ -203,7 +203,7 @@ public class Dashboard extends JFrame { // It's fine to extend JFrame if Dashboa
         // This means the state of the *new* window will reflect the static data.
         home.addActionListener(e -> {
             dashboard.dispose();
-            new MainFrame().initUI(); // Create and show a NEW MainFrame
+            new Assignments().initUI(); // Create and show a NEW MainFrame
         });
 
         lectures.addActionListener(e -> {

@@ -238,7 +238,7 @@ public class CoursesFrame extends MainFrame{
         // --- Navigation Handlers ---
         home.addActionListener(e -> {
             coursesFrame.dispose();
-             new MainFrame().initUI();
+             new Assignments().initUI();
         });
 
         lectures.addActionListener(e -> {

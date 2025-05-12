@@ -341,7 +341,7 @@ public class LecturesFrame {
         // --- Navigation Handlers ---
         home.addActionListener(e -> {
             lectureFrame.dispose();
-             new MainFrame().initUI();
+             new Assignments().initUI();
         });
 
         lectures.addActionListener(e -> {
