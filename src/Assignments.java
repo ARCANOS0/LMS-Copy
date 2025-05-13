@@ -47,10 +47,13 @@ public class Assignments {
     public JButton logout = new JButton("Logout") {
         @Override
         public Dimension getMaximumSize() {
+            // the first arg is the width, here we are telling java take the maximum width available in the panel
+            // the second arg is the height, getPreferredSize means take the height to only contain what is inside the button and nothing else 
             return new Dimension(Integer.MAX_VALUE, super.getPreferredSize().height);
         }
     };
 
+    // this function styles the button to match the aesthetics of the design, instead of styling one by one 
     public static void buttonStyle(JButton button, Color txt, Color active, Color inactive, Color hover) {
         button.setFont(new Font("JetBrainsMono NFM Medium", Font.BOLD, 17));
         button.setAlignmentX(Component.LEFT_ALIGNMENT);
