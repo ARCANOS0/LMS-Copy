@@ -126,7 +126,7 @@ public class LogInFrame extends UsersStorage implements ActionListener{
                         new Dashboard();
                     } else {
                         // For any other valid user, open the MainFrame
-                        new MainFrame().initUI();
+                        new Assignments().initUI();
                     }
 
                 } else {

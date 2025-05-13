@@ -15,7 +15,7 @@ public class CoursesFrame extends MainFrame{
             new String[]{"Data Structures & Algorithms", "Essential concepts for coding interviews.", "images/ds.png"},
             new String[]{"Computer Networks (CCNA)", "Learn networking basics and protocols.", "images/ccna.jpg"},
             new String[]{"Database Programming", "Design and interact with databases.", "images/db.png"},
-            new String[]{"Web Development (Frontend)", "Build interactive user interfaces.", "images/php.png"}
+            new String[]{"Web Development (Backend)", "Build robust backbone apps.", "images/php.png"}
     ));
 
 

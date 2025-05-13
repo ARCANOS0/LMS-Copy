@@ -247,7 +247,7 @@ public class Assignments {
             // If clicking home from MainFrame, just keep it open (or refresh)
             // If you intend to close and open a new one, your current code does that
             mainFrame.dispose();
-            new MainFrame().initUI();
+            new Assignments().initUI();
 
         });
 
